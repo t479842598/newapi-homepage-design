@@ -124,6 +124,16 @@
       text-decoration: none;
     }
 
+    /* 隐藏滚动条 */
+    html {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    html::-webkit-scrollbar {
+      display: none; /* Chrome/Safari/Opera */
+    }
+
     button {
       border: 0;
       background: none;
