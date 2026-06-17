@@ -112,6 +112,58 @@
         radial-gradient(32vw 32vw at 90% 70%, transparent 67%, var(--ring-b) 68.4%, transparent 70.2%),
         radial-gradient(28vw 28vw at 6% 88%, transparent 69%, var(--ring-c) 70.4%, transparent 72.2%);
       filter: blur(2px);
+      animation: float-rings 20s ease-in-out infinite;
+    }
+
+    /* 背景动态动画 */
+    @keyframes float-rings {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      25% {
+        transform: translate(2%, -2%) scale(1.02);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translate(-1%, 3%) scale(0.98);
+        opacity: 0.95;
+      }
+      75% {
+        transform: translate(-2%, -1%) scale(1.01);
+        opacity: 0.92;
+      }
+    }
+
+    /* 呼吸效果 */
+    body::before {
+      background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(245, 245, 247, 0.85) 0%, rgba(245, 245, 247, 0.6) 35%, rgba(245, 245, 247, 0.2) 70%, transparent 100%);
+      animation: breathe 8s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.85;
+        transform: scale(1.05);
+      }
+    }
+
+    html.dark body::before {
+      background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(18, 18, 18, 0.78) 0%, rgba(18, 18, 18, 0.55) 35%, rgba(18, 18, 18, 0.15) 70%, transparent 100%);
+    }
+
+    /* 隐藏滚动条 */
+    html {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    html::-webkit-scrollbar {
+      display: none; /* Chrome/Safari/Opera */
     }
 
     a,
@@ -1277,23 +1329,9 @@
           </a>
 
           <nav class="nav-center" aria-label="主导航">
-            <div class="nav-pill-capsule">
-              <a class="nav-pill-link nav-pill-link-active" href="#" data-i18n="navHome">首页</a>
-              <a class="nav-pill-link" href="https://api.tang74.top/console" target="_blank" rel="noreferrer" data-i18n="navConsole">控制台</a>
-              <a class="nav-pill-link" href="#second-page" data-i18n="navSecond">说明</a>
-              <a class="nav-pill-link" href="#entry-page" data-i18n="navMarket">入口模块</a>
-            </div>
           </nav>
 
           <div class="nav-right">
-            <button class="nav-icon-btn" type="button" aria-label="系统通知">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
-                <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
-              </svg>
-              <span style="position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">3</span>
-            </button>
-
             <button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="切换主题">
               <span class="theme-switch-knob" aria-hidden="true"></span>
               <span class="theme-switch-icon theme-switch-icon-sun" aria-hidden="true">
@@ -1315,39 +1353,6 @@
                 </svg>
               </span>
             </button>
-
-            <div style="position:relative;">
-              <button class="nav-icon-btn" id="lang-trigger" type="button" aria-label="切换语言" aria-expanded="false">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m5 8 6 6"></path>
-                  <path d="m4 14 6-6 2-3"></path>
-                  <path d="M2 5h12"></path>
-                  <path d="M7 2h1"></path>
-                  <path d="m22 22-5-10-5 10"></path>
-                  <path d="M14 18h6"></path>
-                </svg>
-              </button>
-
-              <div class="lang-menu" id="lang-menu" role="menu" aria-label="语言菜单">
-                <button class="lang-option is-active" type="button" data-lang="zh" role="menuitem">
-                  <span>中文</span>
-                  <span>ZH</span>
-                </button>
-                <button class="lang-option" type="button" data-lang="en" role="menuitem">
-                  <span>English</span>
-                  <span>EN</span>
-                </button>
-                <button class="lang-option" type="button" data-lang="ja" role="menuitem">
-                  <span>日本語</span>
-                  <span>JA</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="nav-action-group">
-              <a class="nav-ghost-btn" href="https://api.tang74.top/login" target="_blank" rel="noreferrer" data-i18n="signIn">登录</a>
-              <a class="nav-cta-btn" href="https://api.tang74.top/console" target="_blank" rel="noreferrer" data-i18n="signUp">开始使用</a>
-            </div>
           </div>
         </div>
       </header>
