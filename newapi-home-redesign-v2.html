@@ -1635,20 +1635,26 @@
     }
 
     function closeLangMenu() {
-      langMenu.classList.remove("is-open");
-      langTrigger.setAttribute("aria-expanded", "false");
+      if (langMenu && langTrigger) {
+        langMenu.classList.remove("is-open");
+        langTrigger.setAttribute("aria-expanded", "false");
+      }
     }
 
     function openLangMenu() {
-      langMenu.classList.add("is-open");
-      langTrigger.setAttribute("aria-expanded", "true");
+      if (langMenu && langTrigger) {
+        langMenu.classList.add("is-open");
+        langTrigger.setAttribute("aria-expanded", "true");
+      }
     }
 
     function applyTheme(theme) {
       const dark = theme === "dark";
       root.classList.toggle("dark", dark);
       root.setAttribute("data-theme", dark ? "dark" : "light");
-      themeSwitch.setAttribute("aria-checked", dark ? "true" : "false");
+      if (themeSwitch) {
+        themeSwitch.setAttribute("aria-checked", dark ? "true" : "false");
+      }
       localStorage.setItem("tjk-theme", theme);
     }
 
@@ -1710,7 +1716,7 @@
       revealNodes.forEach((node) => observer.observe(node));
     }
 
-    langTrigger.addEventListener("click", (event) => {
+    langTrigger?.addEventListener("click", (event) => {
       event.stopPropagation();
       if (langMenu.classList.contains("is-open")) {
         closeLangMenu();
@@ -1727,12 +1733,12 @@
     });
 
     document.addEventListener("click", (event) => {
-      if (!langMenu.contains(event.target) && !langTrigger.contains(event.target)) {
+      if (langMenu && langTrigger && !langMenu.contains(event.target) && !langTrigger.contains(event.target)) {
         closeLangMenu();
       }
     });
 
-    themeSwitch.addEventListener("click", (event) => {
+    themeSwitch?.addEventListener("click", (event) => {
       const rect = themeSwitch.getBoundingClientRect();
       root.style.setProperty("--theme-origin-x", `${event.clientX || rect.left + rect.width / 2}px`);
       root.style.setProperty("--theme-origin-y", `${event.clientY || rect.top + rect.height / 2}px`);
