@@ -1,0 +1,38 @@
+{
+  "--41808-20f3": {
+    "agent_id": "--41808-20f3",
+    "pid": 41808,
+    "host": "唐战渊的掠夺者",
+    "client": "codex-mcp-client",
+    "started_at": "2026-06-15T09:15:57.399Z",
+    "last_heartbeat": "2026-06-15T09:15:57.399Z",
+    "status": "active"
+  },
+  "--46500-8c6c": {
+    "agent_id": "--46500-8c6c",
+    "pid": 46500,
+    "host": "唐战渊的掠夺者",
+    "client": "codex-mcp-client",
+    "started_at": "2026-06-15T09:15:57.481Z",
+    "last_heartbeat": "2026-06-15T09:15:57.481Z",
+    "status": "active"
+  },
+  "--28948-dba9": {
+    "agent_id": "--28948-dba9",
+    "pid": 28948,
+    "host": "唐战渊的掠夺者",
+    "client": "codex-mcp-client",
+    "started_at": "2026-06-15T09:22:46.085Z",
+    "last_heartbeat": "2026-06-15T09:22:46.085Z",
+    "status": "active"
+  },
+  "--31932-77a8": {
+    "agent_id": "--31932-77a8",
+    "pid": 31932,
+    "host": "唐战渊的掠夺者",
+    "client": "codex-mcp-client",
+    "started_at": "2026-06-15T09:22:46.161Z",
+    "last_heartbeat": "2026-06-15T09:22:46.161Z",
+    "status": "active"
+  }
+}

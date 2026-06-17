@@ -1,0 +1,1814 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>青棠API - 企业级 AI 中转站</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&display=swap");
+
+    :root {
+      --bg: #f5f5f7;
+      --bg-soft: #fafafa;
+      --text: #0c0c0c;
+      --text-soft: rgba(12, 12, 12, 0.62);
+      --text-faint: rgba(12, 12, 12, 0.42);
+      --line: rgba(0, 0, 0, 0.08);
+      --line-strong: rgba(0, 0, 0, 0.14);
+      --glass-bg: #ffffff;
+      --glass-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 10px 30px -12px rgba(0, 0, 0, 0.1), 0 2px 6px -2px rgba(0, 0, 0, 0.06);
+      --hero-sub-gradient: linear-gradient(to right, #111827 0%, #1e3a8a 25%, #60a5fa 60%, #22d3ee 100%);
+      --hero-shiny-gradient: linear-gradient(to right, #091020 0%, #0b2551 12.5%, #a4f4fd 32.5%, #00d2ff 50%, #0b2551 67.5%, #091020 87.5%, #091020 100%);
+      --nav-bg: rgba(255, 255, 255, 0.08);
+      --nav-border: rgba(255, 255, 255, 0.2);
+      --nav-pill-hover: rgba(255, 255, 255, 0.7);
+      --nav-pill-active: rgba(255, 255, 255, 0.9);
+      --button-bg: #0c0c0c;
+      --button-text: #ffffff;
+      --card-title-gradient: linear-gradient(to right, #111827, #1e3a8a 25%, #3b82f6 65%, #06b6d4);
+      --watermark-line-2: linear-gradient(to right, #111827, #1e3a8a 25%, #3b82f6 65%, #06b6d4);
+      --ring-a: rgba(59, 130, 246, 0.18);
+      --ring-b: rgba(6, 182, 212, 0.16);
+      --ring-c: rgba(59, 130, 246, 0.12);
+      --theme-switch-bg: rgba(0, 0, 0, 0.06);
+      --theme-switch-hover: rgba(0, 0, 0, 0.1);
+      --theme-switch-knob: #ffffff;
+      --theme-switch-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+      --card-check-bg: rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 24px 60px -18px rgba(0, 0, 0, 0.18);
+    }
+
+    html.dark {
+      --bg: #121212;
+      --bg-soft: #171717;
+      --text: #ffffff;
+      --text-soft: rgba(255, 255, 255, 0.62);
+      --text-faint: rgba(255, 255, 255, 0.42);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.15);
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      --hero-sub-gradient: linear-gradient(to right, #091020 0%, #0b2551 25%, #a4f4fd 65%, #00d2ff 100%);
+      --nav-bg: rgba(255, 255, 255, 0.03);
+      --nav-border: rgba(255, 255, 255, 0.08);
+      --nav-pill-hover: rgba(255, 255, 255, 0.12);
+      --nav-pill-active: rgba(255, 255, 255, 0.16);
+      --button-bg: #ffffff;
+      --button-text: #000000;
+      --card-title-gradient: linear-gradient(to right, #091020, #0b2551 25%, #a4f4fd 65%, #00d2ff);
+      --watermark-line-2: linear-gradient(to right, #091020, #0b2551 25%, #a4f4fd 65%, #00d2ff);
+      --ring-a: rgba(255, 255, 255, 0.08);
+      --ring-b: rgba(34, 211, 238, 0.14);
+      --ring-c: rgba(255, 255, 255, 0.06);
+      --theme-switch-bg: rgba(255, 255, 255, 0.08);
+      --theme-switch-hover: rgba(255, 255, 255, 0.14);
+      --theme-switch-knob: #ffffff;
+      --theme-switch-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      --card-check-bg: rgba(255, 255, 255, 0.1);
+      --shadow-lg: 0 24px 60px -18px rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -3;
+    }
+
+    body::before {
+      background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(245, 245, 247, 0.85) 0%, rgba(245, 245, 247, 0.6) 35%, rgba(245, 245, 247, 0.2) 70%, transparent 100%);
+    }
+
+    html.dark body::before {
+      background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(18, 18, 18, 0.78) 0%, rgba(18, 18, 18, 0.55) 35%, rgba(18, 18, 18, 0.15) 70%, transparent 100%);
+    }
+
+    body::after {
+      inset: -8vh -4vw;
+      background:
+        radial-gradient(36vw 36vw at 50% -2%, transparent 64%, var(--ring-a) 65.3%, transparent 67.2%),
+        radial-gradient(32vw 32vw at 90% 70%, transparent 67%, var(--ring-b) 68.4%, transparent 70.2%),
+        radial-gradient(28vw 28vw at 6% 88%, transparent 69%, var(--ring-c) 70.4%, transparent 72.2%);
+      filter: blur(2px);
+    }
+
+    a,
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid rgba(59, 130, 246, 0.45);
+      outline-offset: 4px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .home-root {
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .grain-svg {
+      position: absolute;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-9527 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      backdrop-filter: saturate(180%) blur(22px);
+      -webkit-backdrop-filter: saturate(180%) blur(22px);
+    }
+
+    html.dark .nav-9527 {
+      background: rgba(0, 0, 0, 0.08);
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-inner {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: block;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-center {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .nav-pill-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px;
+      border-radius: 9999px;
+      backdrop-filter: saturate(180%) blur(18px);
+      -webkit-backdrop-filter: saturate(180%) blur(18px);
+      background: var(--nav-bg);
+      border: 1px solid var(--nav-border);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.dark .nav-pill-capsule {
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.04), 0 2px 10px rgba(0, 0, 0, 0.18);
+    }
+
+    .nav-pill-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      min-height: 38px;
+      border-radius: 9999px;
+      font-size: 15px;
+      font-weight: 500;
+      white-space: nowrap;
+      color: rgba(12, 12, 12, 0.75);
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+
+    .nav-pill-link:hover {
+      color: rgba(12, 12, 12, 1);
+      background-color: var(--nav-pill-hover);
+    }
+
+    .nav-pill-link:active {
+      transform: scale(0.97);
+    }
+
+    .nav-pill-link-active {
+      color: rgba(12, 12, 12, 1);
+      background-color: var(--nav-pill-active);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    html.dark .nav-pill-link,
+    html.dark .nav-pill-link-active {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    html.dark .nav-pill-link:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    html.dark .nav-pill-link-active {
+      background-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0, 0, 0, 0.68);
+      background: transparent;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      position: relative;
+    }
+
+    .nav-icon-btn:hover {
+      background: rgba(0, 0, 0, 0.06);
+      color: rgba(0, 0, 0, 1);
+    }
+
+    .nav-icon-btn:active {
+      transform: scale(0.95);
+    }
+
+    html.dark .nav-icon-btn {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    html.dark .nav-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .nav-icon-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 138px;
+      padding: 8px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display: none;
+      z-index: 80;
+    }
+
+    .lang-menu.is-open {
+      display: block;
+      animation: fade-up 0.18s ease both;
+    }
+
+    html.dark .lang-menu {
+      background: rgba(20, 20, 20, 0.96);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    .lang-option {
+      width: 100%;
+      min-height: 38px;
+      padding: 0 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-soft);
+      transition: background-color 0.18s ease, color 0.18s ease;
+    }
+
+    .lang-option:hover,
+    .lang-option.is-active {
+      background: rgba(0, 0, 0, 0.06);
+      color: var(--text);
+    }
+
+    html.dark .lang-option:hover,
+    html.dark .lang-option.is-active {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .nav-action-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-ghost-btn,
+    .nav-cta-btn {
+      min-height: 32px;
+      padding: 0 16px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+
+    .nav-ghost-btn {
+      color: var(--text-soft);
+    }
+
+    .nav-ghost-btn:hover {
+      background: rgba(0, 0, 0, 0.06);
+      color: var(--text);
+    }
+
+    .nav-cta-btn {
+      background: var(--button-bg);
+      color: var(--button-text);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-cta-btn:hover {
+      background: rgba(12, 12, 12, 0.9);
+    }
+
+    .nav-ghost-btn:active,
+    .nav-cta-btn:active {
+      transform: scale(0.96);
+    }
+
+    html.dark .nav-ghost-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    html.dark .nav-cta-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .main-content {
+      flex: 1 1 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-section {
+      min-height: 100vh;
+      padding: 72px 24px 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-inner {
+      width: min(1100px, 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-badge {
+      margin-bottom: 24px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.36);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    html.dark .hero-badge {
+      border-color: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.68);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .hero-title {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: clamp(3.8rem, 8vw, 8.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-title-top {
+      color: var(--text);
+      transition: color 0.5s ease;
+    }
+
+    .hero-title-bottom {
+      font-family: "Inter", sans-serif;
+      font-weight: 800;
+      padding: 4px 0 8px;
+      background-image: var(--hero-shiny-gradient);
+      background-size: 200%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      filter: url(#tjk-noise);
+    }
+
+    .animate-shiny {
+      animation: shiny 6s linear infinite;
+    }
+
+    .hero-desc {
+      margin-top: 28px;
+      max-width: 760px;
+      color: var(--text-soft);
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: color 0.5s ease;
+    }
+
+    .hero-actions {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .btn-9527-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      flex-shrink: 0;
+      gap: 8px;
+      padding: 14px 28px;
+      min-height: 56px;
+      border-radius: 9999px;
+      font-size: 16px;
+      font-weight: 600;
+      white-space: nowrap;
+      background: var(--button-bg);
+      color: var(--button-text);
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-9527-primary:hover {
+      background: rgba(12, 12, 12, 0.9);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
+    }
+
+    .btn-9527-primary:active {
+      transform: scale(0.98);
+    }
+
+    html.dark .btn-9527-primary:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-9527-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      flex-shrink: 0;
+      gap: 6px;
+      min-height: 48px;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      background: transparent;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn-9527-secondary:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-9527-secondary:active {
+      transform: scale(0.98);
+    }
+
+    html.dark .btn-9527-secondary:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-actions svg,
+    .btn-9527-primary svg,
+    .btn-9527-secondary svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 0.02em;
+      transition: color 0.5s ease;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      color: rgba(0, 0, 0, 0.56);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      opacity: 0;
+    }
+
+    .hero-scroll:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: rgba(0, 0, 0, 0.88);
+    }
+
+    .hero-scroll:active {
+      transform: translateX(-50%) scale(0.96);
+    }
+
+    html.dark .hero-scroll {
+      border-color: rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    html.dark .hero-scroll:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+
+    .hero-scroll svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .liquid-glass {
+      background: var(--glass-bg);
+      background-blend-mode: luminosity;
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    html.dark .liquid-glass {
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      border: none;
+    }
+
+    .liquid-glass::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.08), transparent, transparent, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.22));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    html.dark .liquid-glass::before {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.14), transparent, transparent, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.45));
+    }
+
+    .section-block {
+      width: 100%;
+      padding: 80px 24px 96px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .section-two {
+      scroll-margin-top: 24px;
+    }
+
+    .section-two-card {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      padding: 72px 36px;
+      border-radius: 32px;
+      text-align: center;
+      border: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .section-two-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.4;
+      background: radial-gradient(600px circle at 50% 0%, rgba(0, 0, 0, 0.06), transparent 70%);
+    }
+
+    html.dark .section-two-glow {
+      opacity: 0.3;
+      background: radial-gradient(600px circle at 50% 0%, rgba(255, 255, 255, 0.15), transparent 70%);
+    }
+
+    .section-two-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .section-two-title {
+      margin: 0;
+      font-size: clamp(2.6rem, 5vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .section-two-desc {
+      max-width: 540px;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .section-two-actions {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .section-three {
+      position: relative;
+      padding-top: 28px;
+      padding-bottom: 76px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .c3-watermark-container {
+      position: relative;
+      width: 100%;
+      padding: 0 48px;
+      text-align: center;
+      margin-top: 18px;
+      margin-bottom: 18px;
+      z-index: 2;
+    }
+
+    .c3-watermark-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: clamp(3rem, 6.2vw, 6.6rem);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      filter: url(#tjk-noise);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .c3-watermark-line-1 {
+      color: var(--text);
+      transition: color 0.5s ease;
+    }
+
+    .c3-watermark-line-2 {
+      background: var(--watermark-line-2);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .c3-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      width: 100%;
+      padding: 0 48px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .c3-card {
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 38px 22px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: #111827;
+      box-shadow: 0 14px 40px -16px rgba(0, 0, 0, 0.14), 0 4px 12px -4px rgba(0, 0, 0, 0.06);
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.6s ease;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .c3-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), transparent 50%);
+      pointer-events: none;
+    }
+
+    .c3-card:hover {
+      transform: translateY(-12px) scale(1.01);
+      border-color: rgba(0, 0, 0, 0.14);
+      box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.2);
+    }
+
+    html.dark .c3-card {
+      background: linear-gradient(135deg, rgba(20, 20, 24, 0.55), rgba(20, 20, 24, 0.3));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.5);
+    }
+
+    html.dark .c3-card::before {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 50%);
+    }
+
+    html.dark .c3-card:hover {
+      border-color: rgba(34, 211, 238, 0.55);
+      box-shadow: 0 20px 60px -25px rgba(34, 211, 238, 0.25);
+    }
+
+    .c3-tier-small {
+      display: block;
+      font-size: 16px;
+      color: var(--text-soft);
+      line-height: 1.35;
+    }
+
+    .c3-tier-large {
+      display: block;
+      margin-top: 14px;
+      font-size: clamp(2.1rem, 3.2vw, 3.3rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 500;
+    }
+
+    .c3-card--gradient .c3-tier-large {
+      background: var(--card-title-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .c3-desc {
+      margin: 18px 0 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .c3-list {
+      margin: 30px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .c3-list li {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: center;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .c3-check {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: var(--card-check-bg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .c3-check svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      padding-top: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card-domain {
+      font-size: 12px;
+      color: var(--text-faint);
+      font-family: Consolas, "SFMono-Regular", monospace;
+      word-break: break-all;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--button-bg);
+      color: var(--button-text);
+      font-size: 13px;
+      font-weight: 600;
+      transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-link:hover {
+      background: rgba(12, 12, 12, 0.9);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-link:active {
+      transform: scale(0.98);
+    }
+
+    html.dark .card-link:hover {
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .card-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s ease;
+    }
+
+    .card-link:hover svg {
+      transform: translateX(2px);
+    }
+
+    .reveal {
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .reveal.is-visible.delay-1 {
+      animation-delay: 0.08s;
+    }
+
+    .reveal.is-visible.delay-2 {
+      animation-delay: 0.16s;
+    }
+
+    .reveal.is-visible.delay-3 {
+      animation-delay: 0.24s;
+    }
+
+    .reveal.is-visible.delay-4 {
+      animation-delay: 0.32s;
+    }
+
+    .footer {
+      width: 100%;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 18px 24px 26px;
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 12px;
+      position: relative;
+      z-index: 10;
+    }
+
+    html.dark .footer {
+      border-top-color: rgba(255, 255, 255, 0.06);
+    }
+
+    @keyframes shiny {
+      0% {
+        background-position: -200% center;
+      }
+      100% {
+        background-position: 200% center;
+      }
+    }
+
+    @keyframes fade-up {
+      0% {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .nav-center {
+        display: block;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .c3-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .c3-card {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .nav-inner {
+        padding: 0 12px;
+      }
+
+      .brand-name {
+        font-size: 18px;
+      }
+
+      .nav-action-group {
+        gap: 6px;
+      }
+
+      .nav-ghost-btn,
+      .nav-cta-btn {
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      .hero-section {
+        padding: 86px 18px 92px;
+      }
+
+      .hero-title {
+        font-size: clamp(3rem, 14vw, 5.4rem);
+      }
+
+      .hero-desc {
+        font-size: 16px;
+      }
+
+      .section-block {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .section-two-card {
+        padding: 52px 20px;
+      }
+
+      .section-two-title {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+      .c3-watermark-container,
+      .c3-grid {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .c3-grid {
+        margin-top: 18px;
+      }
+
+      .c3-card {
+        border-radius: 26px;
+        padding: 28px 16px;
+      }
+
+      .c3-tier-small {
+        font-size: 15px;
+      }
+
+      .c3-tier-large {
+        font-size: clamp(1.9rem, 8vw, 2.6rem);
+      }
+
+      .c3-desc {
+        font-size: 14px;
+      }
+
+      .c3-list li {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .section-two-actions {
+        flex-direction: row;
+      }
+    }
+
+    /* 液态玻璃转场效果 */
+    .liquid-transition-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .liquid-transition-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .liquid-blob {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      backdrop-filter: saturate(180%) blur(40px);
+      -webkit-backdrop-filter: saturate(180%) blur(40px);
+      box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.5),
+        0 20px 60px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      will-change: transform;
+      animation: liquid-expand 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    html.dark .liquid-blob {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        0 20px 60px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes liquid-expand {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+      60% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.95;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
+      .reveal,
+      .hero-badge,
+      .hero-title,
+      .hero-desc,
+      .hero-actions,
+      .hero-scroll,
+      .section-two-card,
+      .c3-card {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .liquid-transition-overlay,
+      .liquid-blob {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 液态玻璃转场覆盖层 -->
+  <div class="liquid-transition-overlay" id="liquid-overlay"></div>
+
+  <div class="home-root">
+    <svg class="grain-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <filter id="tjk-noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" stitchTiles="stitch"></feTurbulence>
+          <feComponentTransfer>
+            <feFuncA type="linear" slope="0.075"></feFuncA>
+          </feComponentTransfer>
+          <feComposite in2="SourceGraphic" operator="in" result="noise"></feComposite>
+          <feBlend in="SourceGraphic" in2="noise" mode="overlay"></feBlend>
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="page-shell">
+      <header class="nav-9527">
+        <div class="nav-inner">
+          <a class="brand" href="https://api.tang74.top/" target="_blank" rel="noreferrer" aria-label="打开青棠API官网">
+            <img
+              class="brand-mark"
+              src="https://i0.hdslb.com/bfs/openplatform/d3806df20bf1ba777c7f5a61efc4d9acf2beffd4.jpg"
+              alt="青棠API Logo"
+            />
+            <span class="brand-name" data-i18n="brand">青棠API</span>
+          </a>
+
+          <nav class="nav-center" aria-label="主导航">
+            <div class="nav-pill-capsule">
+              <a class="nav-pill-link nav-pill-link-active" href="#" data-i18n="navHome">首页</a>
+              <a class="nav-pill-link" href="https://api.tang74.top/console" target="_blank" rel="noreferrer" data-i18n="navConsole">控制台</a>
+              <a class="nav-pill-link" href="#second-page" data-i18n="navSecond">说明</a>
+              <a class="nav-pill-link" href="#entry-page" data-i18n="navMarket">入口模块</a>
+            </div>
+          </nav>
+
+          <div class="nav-right">
+            <button class="nav-icon-btn" type="button" aria-label="系统通知">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
+                <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
+              </svg>
+              <span style="position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">3</span>
+            </button>
+
+            <button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="切换主题">
+              <span class="theme-switch-knob" aria-hidden="true"></span>
+              <span class="theme-switch-icon theme-switch-icon-sun" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+              </span>
+              <span class="theme-switch-icon theme-switch-icon-moon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </svg>
+              </span>
+            </button>
+
+            <div style="position:relative;">
+              <button class="nav-icon-btn" id="lang-trigger" type="button" aria-label="切换语言" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m5 8 6 6"></path>
+                  <path d="m4 14 6-6 2-3"></path>
+                  <path d="M2 5h12"></path>
+                  <path d="M7 2h1"></path>
+                  <path d="m22 22-5-10-5 10"></path>
+                  <path d="M14 18h6"></path>
+                </svg>
+              </button>
+
+              <div class="lang-menu" id="lang-menu" role="menu" aria-label="语言菜单">
+                <button class="lang-option is-active" type="button" data-lang="zh" role="menuitem">
+                  <span>中文</span>
+                  <span>ZH</span>
+                </button>
+                <button class="lang-option" type="button" data-lang="en" role="menuitem">
+                  <span>English</span>
+                  <span>EN</span>
+                </button>
+                <button class="lang-option" type="button" data-lang="ja" role="menuitem">
+                  <span>日本語</span>
+                  <span>JA</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="nav-action-group">
+              <a class="nav-ghost-btn" href="https://api.tang74.top/login" target="_blank" rel="noreferrer" data-i18n="signIn">登录</a>
+              <a class="nav-cta-btn" href="https://api.tang74.top/console" target="_blank" rel="noreferrer" data-i18n="signUp">开始使用</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <section class="hero-section">
+          <div class="hero-inner">
+            <div class="hero-badge reveal" id="hero-badge" data-i18n="heroBadge">AI 中转站 · 专属线路</div>
+
+            <h1 class="hero-title reveal delay-1">
+              <span class="hero-title-top" id="hero-title-top" data-i18n="heroTitleTop">青棠API</span>
+              <span class="hero-title-bottom animate-shiny" id="hero-title-bottom" data-i18n="heroTitleBottom">企业级 AI 中转站</span>
+            </h1>
+
+            <p class="hero-desc reveal delay-2" id="hero-desc" data-i18n="heroDesc">
+              稳定的企业级 AI 中转服务，统一接入主流模型与开发工具，高速、低延迟，适合日常开发、高频调用与团队使用。
+            </p>
+
+            <div class="hero-actions reveal delay-3">
+              <a href="https://api.tang74.top/console" target="_blank" rel="noreferrer" class="btn-9527-primary">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path>
+                  <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                </svg>
+                <span id="hero-cta" data-i18n="heroCta">立即开始使用</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+              <span class="hero-note" id="hero-note" data-i18n="heroNote">兼容主流 OpenAI 协议 · 适合日常开发、高频调用与团队接入</span>
+            </div>
+          </div>
+
+          <a class="hero-scroll reveal delay-4" href="#second-page" aria-label="向下滚动">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </a>
+        </section>
+
+        <section class="section-block section-two" id="second-page">
+          <div class="section-two-card liquid-glass reveal">
+            <div class="section-two-glow" aria-hidden="true"></div>
+            <div class="section-two-content">
+              <h2 class="section-two-title" id="second-title" data-i18n="secondTitle">替换 Base URL，稳定接入 AI 工具。</h2>
+              <p class="section-two-desc" id="second-desc" data-i18n="secondDesc">
+                获取 Token 后即可连接 Codex、Claude Code、Gemini CLI 等开发工具，也可以直接进入三个核心入口。
+              </p>
+              <div class="section-two-actions">
+                <a href="https://api.tang74.top/" target="_blank" rel="noreferrer" class="btn-9527-primary">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path>
+                    <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                  </svg>
+                  <span id="second-primary" data-i18n="secondPrimary">查看主站</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </a>
+
+                <a href="#entry-page" class="btn-9527-secondary">
+                  <span id="second-secondary" data-i18n="secondSecondary">查看三大入口</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-block section-three" id="entry-page">
+          <div class="c3-watermark-container">
+            <div class="c3-watermark-main">
+              <span class="c3-watermark-line-1" id="watermark-line-1" data-i18n="watermarkLine1">青棠API</span>
+              <span class="c3-watermark-line-2" id="watermark-line-2" data-i18n="watermarkLine2">入口模块</span>
+            </div>
+          </div>
+
+          <div class="c3-grid">
+            <article class="c3-card reveal">
+              <span class="c3-tier-small" id="card1-small" data-i18n="card1Small">Starter</span>
+              <span class="c3-tier-large" id="card1-large" data-i18n="card1Large">大陆直连</span>
+              <p class="c3-desc" id="card1-desc" data-i18n="card1Desc">适合默认开发接入和高频调用。</p>
+              <ul class="c3-list">
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card1-item1" data-i18n="card1Item1">专用 API Token</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card1-item2" data-i18n="card1Item2">替换 Base URL 即可连接</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card1-item3" data-i18n="card1Item3">兼容主流协议</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card1-item4" data-i18n="card1Item4">低延迟稳定访问</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card1-item5" data-i18n="card1Item5">作为默认入口使用</span></li>
+              </ul>
+              <div class="card-actions">
+                <div class="card-domain">api.tang74.top</div>
+                <a class="card-link" href="https://api.tang74.top/console" target="_blank" rel="noreferrer">
+                  <span id="card1-link" data-i18n="card1Link">进入直连入口</span>
+                  <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="c3-card reveal delay-1">
+              <span class="c3-tier-small" id="card2-small" data-i18n="card2Small">Team</span>
+              <span class="c3-tier-large" id="card2-large" data-i18n="card2Large">全球路线</span>
+              <p class="c3-desc" id="card2-desc" data-i18n="card2Desc">适合跨地区环境和国际化使用场景。</p>
+              <ul class="c3-list">
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card2-item1" data-i18n="card2Item1">跨地区访问更直接</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card2-item2" data-i18n="card2Item2">独立备用主通道</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card2-item3" data-i18n="card2Item3">统一多模型网关</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card2-item4" data-i18n="card2Item4">可作为团队回退入口</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card2-item5" data-i18n="card2Item5">适合国际网络环境</span></li>
+              </ul>
+              <div class="card-actions">
+                <div class="card-domain">api.tang74.top</div>
+                <a class="card-link" href="https://api.tang74.top/console" target="_blank" rel="noreferrer">
+                  <span id="card2-link" data-i18n="card2Link">进入全球路线</span>
+                  <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="c3-card c3-card--gradient reveal delay-2">
+              <span class="c3-tier-small" id="card3-small" data-i18n="card3Small">Advanced</span>
+              <span class="c3-tier-large" id="card3-large" data-i18n="card3Large">API 市场</span>
+              <p class="c3-desc" id="card3-desc" data-i18n="card3Desc">丰富的模型选择，满足各类AI应用需求。</p>
+              <ul class="c3-list">
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card3-item1" data-i18n="card3Item1">多种主流AI模型</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card3-item2" data-i18n="card3Item2">灵活的计费方式</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card3-item3" data-i18n="card3Item3">统一的接口标准</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card3-item4" data-i18n="card3Item4">快速集成部署</span></li>
+                <li><span class="c3-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span id="card3-item5" data-i18n="card3Item5">专业技术支持</span></li>
+              </ul>
+              <div class="card-actions">
+                <div class="card-domain">api.tang74.top</div>
+                <a class="card-link" href="https://api.tang74.top/console" target="_blank" rel="noreferrer">
+                  <span id="card3-link" data-i18n="card3Link">进入控制台</span>
+                  <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span id="footer-text" data-i18n="footerText">青棠API · AI 中转站</span>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const copy = {
+      zh: {
+        lang: "zh-CN",
+        title: "青棠API - 企业级 AI 中转站",
+        brand: "青棠API",
+        navHome: "首页",
+        navConsole: "控制台",
+        navSecond: "说明",
+        navMarket: "入口模块",
+        navDraw: "绘图",
+        signIn: "登录",
+        signUp: "开始使用",
+        heroBadge: "AI 中转站 · 专属线路",
+        heroTitleTop: "青棠API",
+        heroTitleBottom: "企业级 AI 中转站",
+        heroDesc: "稳定的企业级 AI 中转服务，统一接入主流模型与开发工具，高速、低延迟，适合日常开发、高频调用与团队使用。",
+        heroCta: "立即开始使用",
+        heroNote: "兼容主流 OpenAI 协议 · 适合日常开发、高频调用与团队接入",
+        secondTitle: "替换 Base URL，稳定接入 AI 工具。",
+        secondDesc: "获取 Token 后即可连接 Codex、Claude Code、Gemini CLI 等开发工具，也可以直接进入三个核心入口。",
+        secondPrimary: "查看主站",
+        secondSecondary: "查看三大入口",
+        watermarkLine1: "青棠API",
+        watermarkLine2: "入口模块",
+        card1Small: "Starter",
+        card1Large: "大陆直连",
+        card1Desc: "适合默认开发接入和高频调用。",
+        card1Item1: "专用 API Token",
+        card1Item2: "替换 Base URL 即可连接",
+        card1Item3: "兼容主流协议",
+        card1Item4: "低延迟稳定访问",
+        card1Item5: "作为默认入口使用",
+        card1Link: "进入直连入口",
+        card2Small: "Team",
+        card2Large: "全球路线",
+        card2Desc: "适合跨地区环境和国际化使用场景。",
+        card2Item1: "跨地区访问更直接",
+        card2Item2: "独立备用主通道",
+        card2Item3: "统一多模型网关",
+        card2Item4: "可作为团队回退入口",
+        card2Item5: "适合国际网络环境",
+        card2Link: "进入全球路线",
+        card3Small: "Advanced",
+        card3Large: "API 市场",
+        card3Desc: "丰富的模型选择，满足各类AI应用需求。",
+        card3Item1: "多种主流AI模型",
+        card3Item2: "灵活的计费方式",
+        card3Item3: "统一的接口标准",
+        card3Item4: "快速集成部署",
+        card3Item5: "专业技术支持",
+        card3Link: "进入控制台",
+        footerText: "青棠API · AI 中转站"
+      },
+      en: {
+        lang: "en",
+        title: "Qingtang API - Enterprise AI Relay",
+        brand: "Qingtang API",
+        navHome: "Home",
+        navConsole: "Console",
+        navSecond: "Overview",
+        navMarket: "Modules",
+        navDraw: "Draw",
+        signIn: "Sign in",
+        signUp: "Sign up",
+        heroBadge: "AI Relay Station · Dedicated Routes",
+        heroTitleTop: "Qingtang API",
+        heroTitleBottom: "Enterprise AI Relay",
+        heroDesc: "A stable enterprise AI relay service for mainstream models and developer tools, built for daily work, frequent calls, and team access.",
+        heroCta: "Start Now",
+        heroNote: "OpenAI-compatible · Built for daily development, high-frequency calls, and team access",
+        secondTitle: "Replace the Base URL, connect AI tools reliably.",
+        secondDesc: "Get a token, connect Codex, Claude Code, Gemini CLI and other tools, or jump directly into the three main routes.",
+        secondPrimary: "Open Main Site",
+        secondSecondary: "View Three Routes",
+        watermarkLine1: "Qingtang API",
+        watermarkLine2: "Entry Modules",
+        card1Small: "Starter",
+        card1Large: "Direct Access",
+        card1Desc: "The default route for frequent development usage.",
+        card1Item1: "Dedicated API token",
+        card1Item2: "Connect by replacing Base URL",
+        card1Item3: "Compatible with major protocols",
+        card1Item4: "Low-latency stable access",
+        card1Item5: "Use as the main route",
+        card1Link: "Enter Console",
+        card2Small: "Team",
+        card2Large: "Global Route",
+        card2Desc: "Built for cross-region and international usage.",
+        card2Item1: "Direct cross-region access",
+        card2Item2: "Independent fallback route",
+        card2Item3: "Unified multi-model gateway",
+        card2Item4: "Good team backup path",
+        card2Item5: "For global network conditions",
+        card2Link: "Enter Console",
+        card3Small: "Advanced",
+        card3Large: "API Market",
+        card3Desc: "Rich model selection for various AI applications.",
+        card3Item1: "Multiple mainstream AI models",
+        card3Item2: "Flexible billing options",
+        card3Item3: "Unified API standards",
+        card3Item4: "Quick integration",
+        card3Item5: "Professional support",
+        card3Link: "Enter Console",
+        footerText: "Qingtang API · AI Relay"
+      },
+      ja: {
+        lang: "ja",
+        title: "青棠API - 企業向け AI 中継",
+        brand: "青棠API",
+        navHome: "ホーム",
+        navConsole: "コンソール",
+        navSecond: "概要",
+        navMarket: "入口",
+        navDraw: "画像生成",
+        signIn: "ログイン",
+        signUp: "開始する",
+        heroBadge: "AI 中継ステーション · 専用ルート",
+        heroTitleTop: "青棠API",
+        heroTitleBottom: "企業向け AI 中継",
+        heroDesc: "主流モデルと開発ツールを安定してつなぐ企業向け AI 中継サービス。日常開発、高頻度利用、チーム利用向けです。",
+        heroCta: "今すぐ始める",
+        heroNote: "OpenAI 互換 · 日常開発とチーム接続向け",
+        secondTitle: "Base URL を差し替えて、AI ツールへ安定接続。",
+        secondDesc: "Token を取得すれば Codex、Claude Code、Gemini CLI などへ接続でき、三つの主要入口にも直接進めます。",
+        secondPrimary: "メインサイトへ",
+        secondSecondary: "三つの入口を見る",
+        watermarkLine1: "青棠API",
+        watermarkLine2: "入口モジュール",
+        card1Small: "Starter",
+        card1Large: "直接アクセス",
+        card1Desc: "標準の開発接続と高頻度利用向け。",
+        card1Item1: "専用 API トークン",
+        card1Item2: "Base URL 差し替えで接続",
+        card1Item3: "主要プロトコルに対応",
+        card1Item4: "低遅延で安定",
+        card1Item5: "標準入口として利用",
+        card1Link: "コンソールへ",
+        card2Small: "Team",
+        card2Large: "グローバル",
+        card2Desc: "跨地域と国際利用環境向け。",
+        card2Item1: "跨地域アクセスが直感的",
+        card2Item2: "独立した予備ルート",
+        card2Item3: "統一マルチモデルゲートウェイ",
+        card2Item4: "チームの回退入口に最適",
+        card2Item5: "海外ネットワーク向け",
+        card2Link: "コンソールへ",
+        card3Small: "Advanced",
+        card3Large: "API マーケット",
+        card3Desc: "様々なAIアプリケーションに対応する豊富なモデル。",
+        card3Item1: "複数の主流AIモデル",
+        card3Item2: "柔軟な課金方式",
+        card3Item3: "統一APIスタンダード",
+        card3Item4: "迅速な統合",
+        card3Item5: "専門技術サポート",
+        card3Link: "コンソールへ",
+        footerText: "青棠API · AI 中継"
+      }
+    };
+
+    const translatable = document.querySelectorAll("[data-i18n]");
+    const langTrigger = document.getElementById("lang-trigger");
+    const langMenu = document.getElementById("lang-menu");
+    const themeSwitch = document.getElementById("theme-switch");
+    const root = document.documentElement;
+
+    function applyLanguage(lang) {
+      const set = copy[lang] || copy.zh;
+      root.lang = set.lang;
+      document.title = set.title;
+      translatable.forEach((node) => {
+        const key = node.dataset.i18n;
+        if (set[key]) {
+          node.textContent = set[key];
+        }
+      });
+      document.querySelectorAll(".lang-option").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.lang === lang);
+      });
+      localStorage.setItem("tjk-lang", lang);
+    }
+
+    function closeLangMenu() {
+      langMenu.classList.remove("is-open");
+      langTrigger.setAttribute("aria-expanded", "false");
+    }
+
+    function openLangMenu() {
+      langMenu.classList.add("is-open");
+      langTrigger.setAttribute("aria-expanded", "true");
+    }
+
+    function applyTheme(theme) {
+      const dark = theme === "dark";
+      root.classList.toggle("dark", dark);
+      root.setAttribute("data-theme", dark ? "dark" : "light");
+      themeSwitch.setAttribute("aria-checked", dark ? "true" : "false");
+      localStorage.setItem("tjk-theme", theme);
+    }
+
+    // 液态玻璃转场效果
+    function createLiquidTransition(event, targetHref) {
+      // 如果是外部链接或新窗口打开，不应用转场
+      if (!targetHref || targetHref.startsWith('http') || targetHref === '#') {
+        return true; // 允许默认行为
+      }
+
+      event.preventDefault();
+
+      const overlay = document.getElementById('liquid-overlay');
+      const clickX = event.clientX;
+      const clickY = event.clientY;
+
+      // 创建液态玻璃气泡
+      const blob = document.createElement('div');
+      blob.className = 'liquid-blob';
+      blob.style.left = clickX + 'px';
+      blob.style.top = clickY + 'px';
+      blob.style.width = '100px';
+      blob.style.height = '100px';
+
+      overlay.appendChild(blob);
+      overlay.classList.add('active');
+
+      // 转场完成后导航
+      setTimeout(() => {
+        const targetElement = document.querySelector(targetHref);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 清理转场效果
+        setTimeout(() => {
+          overlay.classList.remove('active');
+          overlay.innerHTML = '';
+        }, 200);
+      }, 250);
+
+      return false;
+    }
+
+    function observeReveal() {
+      const revealNodes = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        revealNodes.forEach((node) => node.classList.add("is-visible"));
+        return;
+      }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16 });
+      revealNodes.forEach((node) => observer.observe(node));
+    }
+
+    langTrigger.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (langMenu.classList.contains("is-open")) {
+        closeLangMenu();
+      } else {
+        openLangMenu();
+      }
+    });
+
+    document.querySelectorAll(".lang-option").forEach((button) => {
+      button.addEventListener("click", () => {
+        applyLanguage(button.dataset.lang);
+        closeLangMenu();
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!langMenu.contains(event.target) && !langTrigger.contains(event.target)) {
+        closeLangMenu();
+      }
+    });
+
+    themeSwitch.addEventListener("click", (event) => {
+      const rect = themeSwitch.getBoundingClientRect();
+      root.style.setProperty("--theme-origin-x", `${event.clientX || rect.left + rect.width / 2}px`);
+      root.style.setProperty("--theme-origin-y", `${event.clientY || rect.top + rect.height / 2}px`);
+      applyTheme(root.classList.contains("dark") ? "light" : "dark");
+    });
+
+    // 为页面内锚点链接添加液态玻璃转场效果
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(event) {
+        const href = this.getAttribute('href');
+        if (href && href !== '#') {
+          createLiquidTransition(event, href);
+        }
+      });
+    });
+
+    // 为导航按钮添加特殊的液态玻璃效果
+    document.querySelectorAll('.nav-pill-link, .btn-9527-secondary').forEach(link => {
+      link.addEventListener('click', function(event) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          createLiquidTransition(event, href);
+        }
+      });
+    });
+
+    const initialLang = localStorage.getItem("tjk-lang") || "zh";
+    const initialTheme = localStorage.getItem("tjk-theme") || "light";
+    applyLanguage(initialLang);
+    applyTheme(initialTheme);
+    observeReveal();
+  </script>
+</body>
+</html>
